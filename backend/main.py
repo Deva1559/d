@@ -25,7 +25,8 @@ import joblib
 import pandas as pd
 
 try:
-    health_model = joblib.load('bridge_health_model.pkl')
+    model_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'ml_model', 'bridge_health_model.pkl')
+    health_model = joblib.load(model_path)
 except Exception as e:
     print(f"Warning: ML model could not be loaded: {e}. Falling back to random values.")
     health_model = None
@@ -124,7 +125,7 @@ def get_sensor_data(background_tasks: BackgroundTasks):
     
     return data
 
-project_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "project")
+project_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
 app.mount("/", StaticFiles(directory=project_dir, html=True), name="static")
 
 if __name__ == "__main__":
