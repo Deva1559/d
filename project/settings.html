@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Settings | BridgeMonitor BRG-001</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="header" id="header"></header>
+      <main class="content">
+        <div class="page-header">
+          <h1>System Settings</h1>
+          <p>Configure monitoring, alerts, and backend connection</p>
+        </div>
+
+        <div class="grid grid-2">
+          <!-- General settings -->
+          <div class="card settings-group">
+            <h3><i class="fa-solid fa-sliders"></i> General</h3>
+            <div class="setting-row">
+              <div class="setting-label">Auto-refresh sensor data<small>Refresh readings every 5 seconds</small></div>
+              <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Demo data fallback<small>Show simulated data when backend is offline</small></div>
+              <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Dark mode<small>Use dark navy theme (recommended)</small></div>
+              <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Compact sidebar<small>Collapse sidebar by default</small></div>
+              <label class="switch"><input type="checkbox" /><span class="slider"></span></label>
+            </div>
+          </div>
+
+          <!-- Alert thresholds -->
+          <div class="card settings-group">
+            <h3><i class="fa-solid fa-bell"></i> Alert Thresholds</h3>
+            <div class="setting-row">
+              <div class="setting-label">Vibration Warning<small>Above this value triggers a warning</small></div>
+              <input class="input" type="number" value="6" style="width:80px" />
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Vibration Critical<small>Above this value triggers critical alert</small></div>
+              <input class="input" type="number" value="8" style="width:80px" />
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Load Warning (kN)<small>Load warning threshold</small></div>
+              <input class="input" type="number" value="380" style="width:80px" />
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Temperature Max (°C)<small>Maximum safe temperature</small></div>
+              <input class="input" type="number" value="45" style="width:80px" />
+            </div>
+          </div>
+
+          <!-- Backend connection -->
+          <div class="card settings-group">
+            <h3><i class="fa-solid fa-server"></i> Backend Connection</h3>
+            <div class="setting-row">
+              <div class="setting-label">Spring Boot API URL<small>Base URL for sensor data API</small></div>
+              <input class="input" type="text" value="http://localhost:8081" style="width:240px" />
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Connection Status<small>Current backend link state</small></div>
+              <span class="status-indicator critical"><i class="fa-solid fa-circle"></i> Not Connected</span>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">API Endpoints<small>Latest, History, Readings endpoints</small></div>
+              <span class="muted" style="font-size:12px">/api/sensors/latest, /history, /readings</span>
+            </div>
+            <button class="btn btn-primary" style="margin-top:12px" onclick="App.toast('Connection test started...', 'info')"><i class="fa-solid fa-plug"></i> Test Connection</button>
+          </div>
+
+          <!-- Notifications -->
+          <div class="card settings-group">
+            <h3><i class="fa-solid fa-envelope"></i> Notifications</h3>
+            <div class="setting-row">
+              <div class="setting-label">Email alerts<small>Receive email notifications for critical alerts</small></div>
+              <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Push notifications<small>Browser push for new anomalies</small></div>
+              <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Sound alerts<small>Play sound on critical alert</small></div>
+              <label class="switch"><input type="checkbox" /><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label">Daily summary<small>Email a daily health report</small></div>
+              <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:12px">
+          <button class="btn btn-primary" onclick="App.toast('Settings saved successfully', 'success')"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+          <button class="btn btn-ghost" onclick="App.toast('Settings reset to defaults', 'warning')"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+        </div>
+      </main>
+      <footer class="footer">
+        <span>Bridge Infrastructure Health Monitoring System &mdash; BRG-001</span>
+        <span>ESP32 Sensor Network &bull; Demo Build &bull; 2026</span>
+      </footer>
+    </div>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    Layout.render("System Settings");
+  </script>
+</body>
+</html>

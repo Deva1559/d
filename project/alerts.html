@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alerts &amp; Notifications | BridgeMonitor BRG-001</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="header" id="header"></header>
+      <main class="content">
+        <div class="page-header">
+          <h1>Alerts &amp; Notifications</h1>
+          <p>View and manage all sensor alerts</p>
+        </div>
+        <div class="demo-banner">
+          <i class="fa-solid fa-circle-info"></i>
+          <span><strong>DEMO DATA:</strong> Alerts shown are simulated. Connect backend for live alerting.</span>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <select class="select" id="filterSeverity">
+            <option value="all">All Severities</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+          <select class="select" id="filterSensor">
+            <option value="all">All Sensors</option>
+            <option value="VS-02">VS-02</option>
+            <option value="TS-01">TS-01</option>
+            <option value="LC-03">LC-03</option>
+            <option value="HS-01">HS-01</option>
+            <option value="AS-01">AS-01</option>
+          </select>
+          <input class="input" id="filterSearch" type="text" placeholder="Search alert ID or type..." />
+          <button class="btn btn-ghost" onclick="Alerts.init()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+        </div>
+
+        <!-- Alert table -->
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Alert ID</th>
+                  <th>Sensor</th>
+                  <th>Alert Type</th>
+                  <th>Severity</th>
+                  <th>Value</th>
+                  <th>Timestamp</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="alertsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <span>Bridge Infrastructure Health Monitoring System &mdash; BRG-001</span>
+        <span>ESP32 Sensor Network &bull; Demo Build &bull; 2026</span>
+      </footer>
+    </div>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/alerts.js"></script>
+  <script>
+    Layout.render("Alerts & Notifications");
+    Alerts.init();
+    API.startAutoRefresh((liveData, isLive) => {
+        // Just used to hide banners globally
+    });
+  </script>
+</body>
+</html>

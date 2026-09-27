@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predictive Maintenance | BridgeMonitor BRG-001</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="header" id="header"></header>
+      <main class="content">
+        <div class="page-header">
+          <h1>Predictive Maintenance</h1>
+          <p>Bridge health summary, risk assessment, and maintenance recommendations</p>
+        </div>
+        <div class="demo-banner">
+          <i class="fa-solid fa-circle-info"></i>
+          <span><strong>SIMULATED INSIGHTS:</strong> Predictions are demo-based. A trained AI model is required for real maintenance forecasting.</span>
+        </div>
+
+        <!-- Bridge health summary -->
+        <div class="grid grid-3">
+          <div class="card summary-card">
+            <div class="card-title">Bridge Health Summary</div>
+            <div class="card-value" style="color:var(--green)">92.4<span class="sensor-unit">/100</span></div>
+            <span class="status-indicator normal"><i class="fa-solid fa-circle"></i> Good Condition</span>
+          </div>
+          <div class="card summary-card">
+            <div class="card-title">Inspection Priority</div>
+            <div class="card-value" style="color:var(--yellow)">Medium</div>
+            <span class="status-indicator warning"><i class="fa-solid fa-circle"></i> Schedule within 7 days</span>
+          </div>
+          <div class="card summary-card">
+            <div class="card-title">Historical Anomaly Count</div>
+            <div class="card-value">47</div>
+            <span class="status-indicator info"><i class="fa-solid fa-circle"></i> Last 12 months</span>
+          </div>
+        </div>
+
+        <!-- Risk assessment cards -->
+        <h2 class="section-title" style="margin-top:28px;margin-bottom:14px">Risk Assessment</h2>
+        <div class="grid grid-3" id="riskCards"></div>
+
+        <!-- Recommendations + Sensor conditions -->
+        <div class="grid grid-2" style="margin-top:18px">
+          <div>
+            <h2 class="section-title" style="margin-bottom:14px">Maintenance Recommendations</h2>
+            <div id="recommendations"></div>
+          </div>
+          <div class="card">
+            <h2 class="section-title" style="margin-bottom:14px">Sensor Condition</h2>
+            <div id="sensorConditions"></div>
+          </div>
+        </div>
+
+        <!-- Anomaly history chart -->
+        <div class="card chart-card" style="margin-top:18px">
+          <div class="chart-head"><div><h3>Historical Anomaly Count</h3><div class="chart-sub">Anomalies detected per month (last 12 months)</div></div></div>
+          <div class="chart-wrapper sm"><canvas id="chartMaintenance"></canvas></div>
+        </div>
+      </main>
+      <footer class="footer">
+        <span>Bridge Infrastructure Health Monitoring System &mdash; BRG-001</span>
+        <span>ESP32 Sensor Network &bull; Demo Build &bull; 2026</span>
+      </footer>
+    </div>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/maintenance.js"></script>
+  <script>
+    Layout.render("Predictive Maintenance");
+    Maintenance.init();
+    API.startAutoRefresh((liveData, isLive) => {
+        // Just used to hide banners globally
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview Dashboard | BridgeMonitor BRG-001</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main">
+      <header class="header" id="header"></header>
+
+      <main class="content">
+        <div class="page-header">
+          <h1>Overview Dashboard</h1>
+          <p>Real-time structural health monitoring for Bridge BRG-001</p>
+        </div>
+
+        <div class="demo-banner" id="demoBanner">
+          <i class="fa-solid fa-circle-info"></i>
+          <span><strong>DEMO DATA:</strong> Displaying simulated sensor data. Connect the Spring Boot backend to view live readings.</span>
+        </div>
+
+        <!-- Summary cards -->
+        <div class="grid grid-5" id="summaryCards"></div>
+
+        <!-- Sensor monitoring cards -->
+        <h2 class="section-title mt-4" style="margin-top:28px;margin-bottom:14px">Sensor Monitoring</h2>
+        <div class="grid grid-4" id="sensorCards"></div>
+
+        <!-- Charts -->
+        <div class="grid grid-2" style="margin-top:18px">
+          <div class="card chart-card">
+            <div class="chart-head">
+              <div><h3>Vibration Monitoring</h3><div class="chart-sub">Vibration over time with threshold lines</div></div>
+            </div>
+            <div class="chart-wrapper"><canvas id="chartVibration"></canvas></div>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-head">
+              <div><h3>Temperature &amp; Humidity</h3><div class="chart-sub">Dual-axis environmental data</div></div>
+            </div>
+            <div class="chart-wrapper"><canvas id="chartTempHum"></canvas></div>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:18px">
+          <div class="card chart-card">
+            <div class="chart-head">
+              <div><h3>Load / Pressure Analysis</h3><div class="chart-sub">Load variations with threshold indicators</div></div>
+            </div>
+            <div class="chart-wrapper"><canvas id="chartLoad"></canvas></div>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-head">
+              <div><h3>Structural Health Trend</h3><div class="chart-sub">Health score over time (0-100)</div></div>
+            </div>
+            <div class="chart-wrapper"><canvas id="chartHealth"></canvas></div>
+          </div>
+        </div>
+
+        <div class="card chart-card" style="margin-top:18px">
+          <div class="chart-head">
+            <div><h3>Sensor Comparison</h3><div class="chart-sub">Current readings across all sensors</div></div>
+          </div>
+          <div class="chart-wrapper sm"><canvas id="chartCompare"></canvas></div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <span>Bridge Infrastructure Health Monitoring System &mdash; BRG-001</span>
+        <span>ESP32 Sensor Network &bull; Demo Build &bull; 2026</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    Layout.render("Overview Dashboard");
+    Dashboard.init();
+  </script>
+</body>
+</html>

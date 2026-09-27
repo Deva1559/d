@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Monitoring | BridgeMonitor BRG-001</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="header" id="header"></header>
+      <main class="content">
+        <div class="page-header">
+          <h1>Live Monitoring</h1>
+          <p>Real-time sensor readings from ESP32 nodes (auto-refresh every 5 seconds)</p>
+        </div>
+        <div class="demo-banner" id="demoBanner">
+          <i class="fa-solid fa-circle-info"></i>
+          <span><strong>DEMO DATA:</strong> Simulated live readings. Backend not connected.</span>
+        </div>
+        <div class="grid grid-4" id="sensorCards"></div>
+
+        <div class="card chart-card" style="margin-top:18px">
+          <div class="chart-head">
+            <div><h3>Live Vibration Stream</h3><div class="chart-sub">Real-time vibration with threshold lines</div></div>
+            <span class="status-indicator normal"><i class="fa-solid fa-circle"></i> Streaming</span>
+          </div>
+          <div class="chart-wrapper"><canvas id="chartVibration"></canvas></div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:18px">
+          <div class="card chart-card">
+            <div class="chart-head"><div><h3>Live Temperature &amp; Humidity</h3><div class="chart-sub">Dual-axis live data</div></div></div>
+            <div class="chart-wrapper"><canvas id="chartTempHum"></canvas></div>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-head"><div><h3>Live Load / Pressure</h3><div class="chart-sub">Real-time load stream</div></div></div>
+            <div class="chart-wrapper"><canvas id="chartLoad"></canvas></div>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <span>Bridge Infrastructure Health Monitoring System &mdash; BRG-001</span>
+        <span>ESP32 Sensor Network &bull; Demo Build &bull; 2026</span>
+      </footer>
+    </div>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    Layout.render("Live Monitoring");
+    Dashboard.historyData = DEMO.generateHistory(24);
+    Dashboard.renderSensorCards();
+    Charts.vibration("chartVibration", Dashboard.historyData);
+    Charts.tempHumidity("chartTempHum", Dashboard.historyData);
+    Charts.load("chartLoad", Dashboard.historyData);
+    Dashboard.startRefresh();
+  </script>
+</body>
+</html>

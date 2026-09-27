@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sensor History | BridgeMonitor BRG-001</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="header" id="header"></header>
+      <main class="content">
+        <div class="page-header">
+          <h1>Sensor History</h1>
+          <p>Historical sensor readings and trend analysis</p>
+        </div>
+        <div class="demo-banner">
+          <i class="fa-solid fa-circle-info"></i>
+          <span><strong>DEMO DATA:</strong> Historical data is simulated. Connect backend to query real sensor logs.</span>
+        </div>
+
+        <!-- History filters -->
+        <div class="filters">
+          <select class="select" id="historySensor">
+            <option value="all">All Sensors</option>
+            <option value="temperature">Temperature</option>
+            <option value="humidity">Humidity</option>
+            <option value="vibration">Vibration</option>
+            <option value="load">Load / Pressure</option>
+          </select>
+          <select class="select" id="historyRange">
+            <option value="24">Last 24 Hours</option>
+            <option value="48">Last 48 Hours</option>
+            <option value="168">Last 7 Days</option>
+          </select>
+          <input class="input" type="date" id="historyDate" />
+          <button class="btn btn-primary" onclick="App.toast('History query submitted (demo)', 'info')"><i class="fa-solid fa-magnifying-glass"></i> Query</button>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid grid-2">
+          <div class="card chart-card">
+            <div class="chart-head"><div><h3>Vibration History</h3><div class="chart-sub">Historical vibration trend</div></div></div>
+            <div class="chart-wrapper"><canvas id="chartVibration"></canvas></div>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-head"><div><h3>Temperature &amp; Humidity History</h3><div class="chart-sub">Dual-axis historical</div></div></div>
+            <div class="chart-wrapper"><canvas id="chartTempHum"></canvas></div>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:18px">
+          <div class="card chart-card">
+            <div class="chart-head"><div><h3>Load History</h3><div class="chart-sub">Historical load data</div></div></div>
+            <div class="chart-wrapper"><canvas id="chartLoad"></canvas></div>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-head"><div><h3>Health Score History</h3><div class="chart-sub">Long-term structural health</div></div></div>
+            <div class="chart-wrapper"><canvas id="chartHealth"></canvas></div>
+          </div>
+        </div>
+
+        <!-- History table -->
+        <div class="card" style="margin-top:18px">
+          <h2 class="section-title" style="margin-bottom:14px">Recent Readings Log</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Timestamp</th><th>Temperature (°C)</th><th>Humidity (%)</th><th>Vibration (mm/s)</th><th>Load (kN)</th><th>Status</th></tr>
+              </thead>
+              <tbody id="historyTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <span>Bridge Infrastructure Health Monitoring System &mdash; BRG-001</span>
+        <span>ESP32 Sensor Network &bull; Demo Build &bull; 2026</span>
+      </footer>
+    </div>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/charts.js"></script>
+  <script>
+    Layout.render("Sensor History");
+    const h = DEMO.generateHistory(24);
+    Charts.vibration("chartVibration", h);
+    Charts.tempHumidity("chartTempHum", h);
+    Charts.load("chartLoad", h);
+    Charts.health("chartHealth", h);
+    // Populate history table
+    const tbody = document.getElementById("historyTable");
+    let rows = "";
+    for (let i = 23; i >= 0; i--) {
+      const time = new Date(DEMO.baseTime + i * 150000).toLocaleString("en-US");
+      const st = h.vib[i] > 6 ? "critical" : h.vib[i] > 4 ? "warning" : "normal";
+      const stTxt = st === "critical" ? "Critical" : st === "warning" ? "Warning" : "Normal";
+      rows += `<tr><td>${time}</td><td>${h.temp[i]}</td><td>${h.hum[i]}</td><td>${h.vib[i]}</td><td>${h.load[i]}</td><td><span class="status-indicator ${st}"><i class="fa-solid fa-circle"></i> ${stTxt}</span></td></tr>`;
+    }
+    tbody.innerHTML = rows;
+
+    API.startAutoRefresh((liveData, isLive) => {
+        // Just used to hide banners globally
+    });
+  </script>
+</body>
+</html>

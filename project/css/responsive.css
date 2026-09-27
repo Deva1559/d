@@ -1,0 +1,74 @@
+/* ============================================================
+   Responsive Styles
+   ============================================================ */
+
+/* Large desktops */
+@media (max-width: 1400px) {
+  .grid-5 { grid-template-columns: repeat(3, 1fr); }
+  .grid-5 > :nth-child(4),
+  .grid-5 > :nth-child(5) { grid-column: span 1; }
+}
+
+/* Laptops */
+@media (max-width: 1200px) {
+  .grid-5 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+  :root {
+    --sidebar-w: 240px;
+  }
+  .grid-5, .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .header-title { font-size: 13px; }
+  .profile .name, .profile .role { display: none; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: var(--sidebar-w);
+  }
+  .sidebar.mobile-open { transform: translateX(0); }
+  .sidebar.collapsed { width: var(--sidebar-w); transform: translateX(-100%); }
+  .sidebar.collapsed.mobile-open { transform: translateX(0); }
+  .sidebar.collapsed .logo-text,
+  .sidebar.collapsed .nav-label,
+  .sidebar.collapsed .nav-section-title { display: block; }
+
+  .main { margin-left: 0; }
+  .sidebar.collapsed ~ .main { margin-left: 0; }
+
+  .grid-5, .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+
+  .content { padding: 16px; }
+  .header { padding: 0 14px; gap: 10px; }
+  .last-updated { display: none; }
+  .status-pill { padding: 4px 10px; font-size: 11px; }
+
+  .chart-wrapper { height: 240px; }
+
+  .footer { flex-direction: column; text-align: center; }
+
+  /* Backdrop for mobile sidebar */
+  .backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+  }
+  .backdrop.show { display: block; }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .page-header h1 { font-size: 18px; }
+  .card { padding: 16px; }
+  .card-value { font-size: 22px; }
+  .sensor-card .sensor-value { font-size: 24px; }
+  .filters { gap: 8px; }
+  .select, .input { width: 100%; }
+}
